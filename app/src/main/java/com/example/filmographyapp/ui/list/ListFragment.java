@@ -27,7 +27,7 @@ public class ListFragment extends Fragment {
 
         // Accessing the Buttons
         Button aboutButton = binding.aboutButton;
-        Button calculateButton = binding.calculateButton;
+        Button calculateButton = binding.searchButton;
         Button helpButton = binding.helpButton;
 
         // Accessing the TextView for results

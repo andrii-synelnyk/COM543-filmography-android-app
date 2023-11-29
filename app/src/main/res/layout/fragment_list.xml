@@ -37,11 +37,11 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/calculateButton"
+            app:layout_constraintEnd_toStartOf="@id/searchButton"
             app:layout_constraintHorizontal_chainStyle="spread_inside"/>
 
         <Button
-            android:id="@+id/calculateButton"
+            android:id="@+id/searchButton"
             android:layout_width="130dp"
             android:layout_height="60dp"
             android:text="Search"
@@ -57,7 +57,7 @@
             android:text="Help"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/calculateButton"
+            app:layout_constraintStart_toEndOf="@id/searchButton"
             app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
