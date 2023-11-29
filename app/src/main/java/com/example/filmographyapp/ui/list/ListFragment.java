@@ -23,8 +23,7 @@ public class ListFragment extends Fragment {
         View root = binding.getRoot();
 
         // Accessing the EditTexts
-        EditText ipAddressInput = binding.ipAddressInput;
-        EditText subnetMaskInput = binding.subnetMaskInput;
+        EditText ipAddressInput = binding.titleInput;
 
         // Accessing the Buttons
         Button aboutButton = binding.aboutButton;

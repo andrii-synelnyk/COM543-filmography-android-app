@@ -7,10 +7,10 @@
     tools:context=".ui.list.ListFragment">
 
     <EditText
-        android:id="@+id/ipAddressInput"
+        android:id="@+id/titleInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter IP Address"
+        android:hint="Enter a movie title"
         android:inputType="text"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,29 +18,13 @@
         android:layout_margin="16dp"
 
         android:textSize="25sp"
-        android:text="10.0.0.0"
-        />
-
-    <EditText
-        android:id="@+id/subnetMaskInput"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Enter Subnet Mask"
-        android:inputType="text"
-        app:layout_constraintTop_toBottomOf="@+id/ipAddressInput"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"
-
-        android:textSize="25sp"
-        android:text="255.0.0.0"
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/row"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/subnetMaskInput"
+        app:layout_constraintTop_toBottomOf="@id/titleInput"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp">
@@ -60,14 +44,11 @@
             android:id="@+id/calculateButton"
             android:layout_width="130dp"
             android:layout_height="60dp"
-            android:text="Calculate"
+            android:text="Search"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/aboutButton"
-            app:layout_constraintEnd_toStartOf="@id/helpButton"
-
-
-            />
+            app:layout_constraintEnd_toStartOf="@id/helpButton" />
 
         <Button
             android:id="@+id/helpButton"
