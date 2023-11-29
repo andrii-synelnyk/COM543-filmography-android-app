@@ -7,15 +7,15 @@
 
     <fragment
         android:id="@+id/navigation_modify"
-        android:name="com.example.filmographyapp.ui.list.ListFragment"
+        android:name="com.example.filmographyapp.ui.modify.ModifyFragment"
         android:label="@string/title_modify"
-        tools:layout="@layout/fragment_modify" />
+        tools:layout="@layout/fragment_list" />
 
     <fragment
         android:id="@+id/navigation_list_and_search"
-        android:name="com.example.filmographyapp.ui.modify.ModifyFragment"
+        android:name="com.example.filmographyapp.ui.list.ListFragment"
         android:label="@string/title_list_and_search"
-        tools:layout="@layout/fragment_list" />
+        tools:layout="@layout/fragment_modify" />
 
     <fragment
         android:id="@+id/navigation_add"
