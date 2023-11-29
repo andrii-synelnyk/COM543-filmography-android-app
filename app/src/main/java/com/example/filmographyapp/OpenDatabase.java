@@ -7,6 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class OpenDatabase extends SQLiteOpenHelper
@@ -16,7 +21,7 @@ public class OpenDatabase extends SQLiteOpenHelper
     // TOGGLE THIS NUMBER FOR UPDATING TABLES AND DATABASE
     private static final int DATABASE_VERSION = 1;
 
-    OpenDatabase(Context context)
+    public OpenDatabase(Context context)
     {
         super( context, DATABASE_NAME, null, DATABASE_VERSION );
 
@@ -36,7 +41,7 @@ public class OpenDatabase extends SQLiteOpenHelper
 
     public void displayRecords(SQLiteDatabase sqdb)
     {
-        Cursor c = sqdb.rawQuery("SELECT * FROM songtable", null);
+        Cursor c = sqdb.rawQuery("SELECT * FROM FilmsTable", null);
         if (c != null)
         {
             if (c.moveToFirst())
@@ -56,10 +61,10 @@ public class OpenDatabase extends SQLiteOpenHelper
 
     } // public void displayRecords()
 
-    public String allRecordsInSongtable(SQLiteDatabase sqdb)
+    public String allRecordsInFilmsTable(SQLiteDatabase sqdb)
     {
         String result = "";
-        Cursor c = sqdb.rawQuery("SELECT * FROM songtable", null);
+        Cursor c = sqdb.rawQuery("SELECT * FROM FilmsTable", null);
         if (c != null)
         {
             if (c.moveToFirst())
@@ -88,12 +93,12 @@ public class OpenDatabase extends SQLiteOpenHelper
         c.close();
 
         return result;
-    } // public String allRecordsInSongtable(SQLiteDatabase sqdb)
+    } // public String allRecordsInFilmsTable(SQLiteDatabase sqdb)
 
-    public String searchBydirectorInSongtable(SQLiteDatabase sqdb, String searchdirector)
+    public String searchBydirectorInFilmsTable(SQLiteDatabase sqdb, String searchdirector)
     {
         String result = "";
-        Cursor c = sqdb.rawQuery("SELECT * FROM songtable where director = '" + searchdirector + "'",
+        Cursor c = sqdb.rawQuery("SELECT * FROM FilmsTable where director = '" + searchdirector + "'",
                 null);
         if (c != null)
         {
@@ -123,13 +128,13 @@ public class OpenDatabase extends SQLiteOpenHelper
 
         return result;
 
-    } // public String searchBydirectorInSongtable(SQLiteDatabase sqdb, String searchdirector)
+    } // public String searchBydirectorInFilmsTable(SQLiteDatabase sqdb, String searchdirector)
 
 
-    public int numberOfRecordsInSongtable(SQLiteDatabase sqdb)
+    public int numberOfRecordsInFilmsTable(SQLiteDatabase sqdb)
     {
         int count = 0;
-        Cursor c = sqdb.rawQuery("SELECT count(*) FROM songtable", null);
+        Cursor c = sqdb.rawQuery("SELECT count(*) FROM FilmsTable", null);
         if (c != null)
         {
             if (c.moveToFirst())
@@ -145,12 +150,12 @@ public class OpenDatabase extends SQLiteOpenHelper
 
         return count;
 
-    } // public int numberOfRecordsInSongtable(SQLiteDatabase sqdb)
+    } // public int numberOfRecordsInFilmsTable(SQLiteDatabase sqdb)
 
-    public int numberOfRecsSearchBydirectorInSongtable(SQLiteDatabase sqdb, String searchdirector)
+    public int numberOfRecsSearchBydirectorInFilmsTable(SQLiteDatabase sqdb, String searchdirector)
     {
         int count = 0;
-        Cursor c = sqdb.rawQuery("SELECT count(*) FROM songtable where director = '" + searchdirector + "';", null);
+        Cursor c = sqdb.rawQuery("SELECT count(*) FROM FilmsTable where director = '" + searchdirector + "';", null);
         if (c != null)
         {
             if (c.moveToFirst())
@@ -166,29 +171,29 @@ public class OpenDatabase extends SQLiteOpenHelper
 
         return count;
 
-    } // public int numberOfRecsSearchBydirectorInSongtable(SQLiteDatabase sqdb)
+    } // public int numberOfRecsSearchBydirectorInFilmsTable(SQLiteDatabase sqdb)
 
-    public void insertRecordSongTable(SQLiteDatabase sqdb,
+    public void insertRecordFilmsTable(SQLiteDatabase sqdb,
                                       String movie_name, String director, String release_year, String genre)
     {
         // INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
         //VALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway');
 
-        String insertString = "INSERT INTO SongTable(movie_name, director, release_year, genre) ";
+        String insertString = "INSERT INTO FilmsTable(movie_name, director, release_year, genre) ";
         insertString = insertString + " VALUES ('" + movie_name + "','" + director + "','" + release_year + "','" + genre + "');";
 
         Log.w("INSERT",insertString);
 
         sqdb.execSQL(insertString);
 
-    }   //  public void insertRecordSongTable(SQLiteDatabase sqdb,String movie_name, String director, String release_year, String genre)
+    }   //  public void insertRecordFilmsTable(SQLiteDatabase sqdb,String movie_name, String director, String release_year, String genre)
 
-    public ArrayList<String> allRecordsInSongtableArrayList(SQLiteDatabase sqdb)
+    public ArrayList<String> allRecordsInFilmsTableArrayList(SQLiteDatabase sqdb)
     {
         ArrayList<String> recordList = new ArrayList<String>();
 
         String result = "";
-        Cursor c = sqdb.rawQuery("SELECT * FROM songtable", null);
+        Cursor c = sqdb.rawQuery("SELECT * FROM FilmsTable", null);
         if (c != null)
         {
             if (c.moveToFirst())
@@ -222,7 +227,7 @@ public class OpenDatabase extends SQLiteOpenHelper
 
         return recordList;
 
-    } // public ArrayList<String> allRecordsInSongtableArrayList(SQLiteDatabase sqdb)
+    } // public ArrayList<String> allRecordsInFilmsTableArrayList(SQLiteDatabase sqdb)
 
 
     public void updateRecord(SQLiteDatabase sqdb,
@@ -233,7 +238,7 @@ public class OpenDatabase extends SQLiteOpenHelper
         //SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
         //WHERE CustomerID = 1;
 
-        String updateString = "UPDATE SongTable SET movie_name = '" + Song + "', director = '" + director + "',";
+        String updateString = "UPDATE FilmsTable SET movie_name = '" + Song + "', director = '" + director + "',";
         updateString = updateString + " release_year = '" + release_year + "', genre = '" + genre + "'";
         updateString = updateString + " WHERE id = " + id + ";";
 
@@ -243,4 +248,23 @@ public class OpenDatabase extends SQLiteOpenHelper
 
     }   //  public void updateRecord(SQLiteDatabase sqdb, String id, String Song, String director, String release_year, String genre)
 
+    public static void copyDatabase(Context context) throws IOException, IOException {
+        String DB_PATH = context.getDatabasePath("filmography.db").getPath();
+        File dbFile = new File(DB_PATH);
+
+        if (!dbFile.exists()) {
+            InputStream in = context.getAssets().open(DATABASE_NAME);
+            OutputStream out = new FileOutputStream(dbFile);
+
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = in.read(buffer)) > 0) {
+                out.write(buffer, 0, length);
+            }
+
+            out.flush();
+            out.close();
+            in.close();
+        }
+    }
 }   //  public class OpenDatabase extends SQLiteOpenHelper

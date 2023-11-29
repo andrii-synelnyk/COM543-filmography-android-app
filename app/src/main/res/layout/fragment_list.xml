@@ -61,6 +61,7 @@
 
     <!-- New Layout for the 'List all movies' button -->
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/secondRow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/row"
@@ -69,7 +70,7 @@
         android:layout_marginTop="16dp">
 
         <Button
-            android:id="@+id/listMoviesButton"
+            android:id="@+id/listAllButton"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:text="List all movies"
@@ -79,15 +80,18 @@
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!-- ScrollView to take up all available space below the listAllButton -->
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/listMoviesButton"
+        app:layout_constraintTop_toBottomOf="@id/secondRow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"
-        tools:ignore="NotSibling">
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp">
 
         <TextView
             android:id="@+id/resultTextView"

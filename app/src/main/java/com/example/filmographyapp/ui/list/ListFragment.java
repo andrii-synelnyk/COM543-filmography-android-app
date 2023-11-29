@@ -1,5 +1,6 @@
 package com.example.filmographyapp.ui.list;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.filmographyapp.OpenDatabase;
 import com.example.filmographyapp.databinding.FragmentListBinding;
+
+import java.io.IOException;
+import java.util.Objects;
 
 public class ListFragment extends Fragment {
 
@@ -22,19 +27,45 @@ public class ListFragment extends Fragment {
         binding = FragmentListBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // Accessing the EditTexts
-        EditText ipAddressInput = binding.titleInput;
+        // Accessing the EditText
+        EditText titleInput = binding.titleInput;
 
         // Accessing the Buttons
-        Button aboutButton = binding.aboutButton;
-        Button calculateButton = binding.searchButton;
-        Button helpButton = binding.helpButton;
+        Button searchButton = binding.searchButton;
+        Button listAllButton = binding.listAllButton;
 
         // Accessing the TextView for results
         TextView resultTextView = binding.resultTextView;
 
-        // Here, add any listeners or additional logic you need for the UI elements
-        // For example, setting an OnClickListener for calculateButton
+        try {
+            OpenDatabase.copyDatabase(requireContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Handle error
+        }
+
+        // Database helper
+        OpenDatabase openDatabase = new OpenDatabase(getContext());
+        SQLiteDatabase database = openDatabase.getWritableDatabase();
+
+        // Search Button OnClickListener
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String title = titleInput.getText().toString();
+                String result = openDatabase.searchBydirectorInFilmsTable(database, title);
+                resultTextView.setText(result);
+            }
+        });
+
+        // List All Button OnClickListener
+        listAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String result = openDatabase.allRecordsInFilmsTable(database);
+                resultTextView.setText(result);
+            }
+        });
 
         return root;
     }
