@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">FilmographyApp</string>
     <string name="title_modify">Modify</string>
+    <string name="title_delete">Delete</string>
     <string name="title_list_and_search">List and Search</string>
     <string name="title_add">Add</string>
 </resources>

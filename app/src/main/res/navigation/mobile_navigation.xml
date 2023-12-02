@@ -6,6 +6,12 @@
     app:startDestination="@+id/navigation_list_and_search">
 
     <fragment
+        android:id="@+id/navigation_delete"
+        android:name="com.example.filmographyapp.ui.delete.DeleteFragment"
+        android:label="@string/title_delete"
+        tools:layout="@layout/fragment_delete" />
+
+    <fragment
         android:id="@+id/navigation_modify"
         android:name="com.example.filmographyapp.ui.modify.ModifyFragment"
         android:label="@string/title_modify"
