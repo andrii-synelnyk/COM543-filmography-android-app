@@ -39,28 +39,6 @@ public class OpenDatabase extends SQLiteOpenHelper
 
     } // public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
 
-    public void displayRecords(SQLiteDatabase sqdb)
-    {
-        Cursor c = sqdb.rawQuery("SELECT * FROM FilmsTable", null);
-        if (c != null)
-        {
-            if (c.moveToFirst())
-            {
-                do
-                {
-                    String id = c.getString(0);
-                    String movie_name = c.getString(1);
-                    String director = c.getString(2);
-                    String release_year = c.getString(3);
-                    String genre = c.getString(4);
-                    Log.w("FilmsTable", "ID = " + id + " movie_name = " + movie_name);
-                } while (c.moveToNext());
-            }
-        }
-        c.close();
-
-    } // public void displayRecords()
-
     public String allRecordsInFilmsTable(SQLiteDatabase sqdb)
     {
         String result = "";
@@ -95,7 +73,7 @@ public class OpenDatabase extends SQLiteOpenHelper
         return result;
     } // public String allRecordsInFilmsTable(SQLiteDatabase sqdb)
 
-    public String searchByTitleInFilmsTable(SQLiteDatabase sqdb, String searchTitle) {
+    public String searchInFilmsTable(SQLiteDatabase sqdb, String searchTitle) {
         String result = "";
         // Use LIKE operator and '%' wildcard to search for any occurrence of searchTitle in any column
         Cursor c = sqdb.rawQuery("SELECT * FROM FilmsTable WHERE movie_name LIKE '%" + searchTitle + "%' OR director LIKE '%" + searchTitle + "%' OR release_year LIKE '%" + searchTitle + "%' OR genre LIKE '%" + searchTitle + "%'", null);
@@ -124,49 +102,6 @@ public class OpenDatabase extends SQLiteOpenHelper
         return result;
     }
 
-
-    public int numberOfRecordsInFilmsTable(SQLiteDatabase sqdb)
-    {
-        int count = 0;
-        Cursor c = sqdb.rawQuery("SELECT count(*) FROM FilmsTable", null);
-        if (c != null)
-        {
-            if (c.moveToFirst())
-            {
-                do
-                {
-                    String id = c.getString(0);
-                    count = Integer.parseInt( id );
-                } while (c.moveToNext());
-            }
-        }
-        c.close();
-
-        return count;
-
-    } // public int numberOfRecordsInFilmsTable(SQLiteDatabase sqdb)
-
-    public int numberOfRecsSearchBydirectorInFilmsTable(SQLiteDatabase sqdb, String searchdirector)
-    {
-        int count = 0;
-        Cursor c = sqdb.rawQuery("SELECT count(*) FROM FilmsTable where director = '" + searchdirector + "';", null);
-        if (c != null)
-        {
-            if (c.moveToFirst())
-            {
-                do
-                {
-                    String id = c.getString(0);
-                    count = Integer.parseInt( id );
-                } while (c.moveToNext());
-            }
-        }
-        c.close();
-
-        return count;
-
-    } // public int numberOfRecsSearchBydirectorInFilmsTable(SQLiteDatabase sqdb)
-
     public void insertRecordFilmsTable(SQLiteDatabase sqdb,
                                       String movie_name, String director, String release_year, String genre)
     {
@@ -181,47 +116,6 @@ public class OpenDatabase extends SQLiteOpenHelper
         sqdb.execSQL(insertString);
 
     }   //  public void insertRecordFilmsTable(SQLiteDatabase sqdb,String movie_name, String director, String release_year, String genre)
-
-    public ArrayList<String> allRecordsInFilmsTableArrayList(SQLiteDatabase sqdb)
-    {
-        ArrayList<String> recordList = new ArrayList<String>();
-
-        String result = "";
-        Cursor c = sqdb.rawQuery("SELECT * FROM FilmsTable", null);
-        if (c != null)
-        {
-            if (c.moveToFirst())
-            {
-                do
-                {
-                    result = "";        // initialise result string !!!
-
-                    String id = c.getString(0);
-                    result = result + id + ",";
-
-                    String movie_name = c.getString(1);
-                    result = result + movie_name + ",";
-
-                    String director = c.getString(2);
-                    result = result + director + ",";
-
-                    String release_year = c.getString(3);
-                    result = result + release_year + ",";
-
-                    String genre = c.getString(4);
-                    result = result + genre;        // new line control character is not needed with arrayList!!
-
-                    recordList.add( result );   // add current record string to arraylist of strings!
-
-                    Log.w("FilmsTable", "ID = " + id + " movie_name = " + movie_name);
-                } while (c.moveToNext());
-            }
-        }
-        c.close();
-
-        return recordList;
-
-    } // public ArrayList<String> allRecordsInFilmsTableArrayList(SQLiteDatabase sqdb)
 
 
     public void updateRecord(SQLiteDatabase sqdb,
