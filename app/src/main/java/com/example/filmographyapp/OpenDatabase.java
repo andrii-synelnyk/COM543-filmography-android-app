@@ -136,6 +136,24 @@ public class OpenDatabase extends SQLiteOpenHelper
 
     }   //  public void updateRecord(SQLiteDatabase sqdb, String id, String Song, String director, String release_year, String genre)
 
+    public ArrayList<String> getAllMovies(SQLiteDatabase sqdb) {
+        ArrayList<String> moviesList = new ArrayList<>();
+
+        Cursor c = sqdb.rawQuery("SELECT * FROM FilmsTable", null);
+        if (c != null) {
+            if (c.moveToFirst()) {
+                do {
+                    String movie_name = c.getString(1); // Assuming movie_name is at index 1
+                    moviesList.add(movie_name);
+                    Log.w("FilmsTable", "Movie Name = " + movie_name);
+                } while (c.moveToNext());
+            }
+            c.close();
+        }
+
+        return moviesList;
+    }
+
     public static void copyDatabase(Context context) throws IOException, IOException {
         String DB_PATH = context.getDatabasePath("filmography.db").getPath();
         File dbFile = new File(DB_PATH);
