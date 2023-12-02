@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +18,7 @@ import com.example.filmographyapp.OpenDatabase;
 import com.example.filmographyapp.databinding.FragmentListBinding;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class ListFragment extends Fragment {
@@ -34,8 +37,8 @@ public class ListFragment extends Fragment {
         Button searchButton = binding.searchButton;
         Button listAllButton = binding.listAllButton;
 
-        // Accessing the TextView for results
-        TextView resultTextView = binding.resultTextView;
+        // Accessing the ListView
+        ListView resultsListView = binding.resultsListView;
 
         try {
             OpenDatabase.copyDatabase(requireContext());
@@ -53,8 +56,9 @@ public class ListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String title = titleInput.getText().toString();
-                String result = openDatabase.searchInFilmsTable(database, title);
-                resultTextView.setText(result);
+                ArrayList<String> results = openDatabase.searchInFilmsTable(database, title);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, results);
+                resultsListView.setAdapter(adapter);
             }
         });
 
@@ -62,8 +66,9 @@ public class ListFragment extends Fragment {
         listAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String result = openDatabase.allRecordsInFilmsTable(database);
-                resultTextView.setText(result);
+                ArrayList<String> results = openDatabase.allRecordsInFilmsTable(database);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, results);
+                resultsListView.setAdapter(adapter);
             }
         });
 

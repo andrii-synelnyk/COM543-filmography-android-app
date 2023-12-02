@@ -39,67 +39,59 @@ public class OpenDatabase extends SQLiteOpenHelper
 
     } // public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
 
-    public String allRecordsInFilmsTable(SQLiteDatabase sqdb)
-    {
-        String result = "";
+    public ArrayList<String> allRecordsInFilmsTable(SQLiteDatabase sqdb) {
+        ArrayList<String> recordList = new ArrayList<>();
         Cursor c = sqdb.rawQuery("SELECT * FROM FilmsTable", null);
-        if (c != null)
-        {
-            if (c.moveToFirst())
-            {
-                do
-                {
+        if (c != null) {
+            if (c.moveToFirst()) {
+                do {
+                    String record = "";
                     String id = c.getString(0);
-                    result = result + id + ". ";
-
+                    record += id + ". ";
                     String movie_name = c.getString(1);
-                    result = result + movie_name + ", ";
-
+                    record += movie_name + ", ";
                     String director = c.getString(2);
-                    result = result + director + ", ";
-
+                    record += director + ", ";
                     String release_year = c.getString(3);
-                    result = result + release_year + ", ";
-
+                    record += release_year + ", ";
                     String genre = c.getString(4);
-                    result = result + genre + "\n"; // new line control character
-
+                    record += genre;
+                    recordList.add(record);
                     Log.w("FilmsTable", "ID = " + id + " movie_name = " + movie_name);
                 } while (c.moveToNext());
             }
+            c.close();
         }
-        c.close();
+        return recordList;
+    }
 
-        return result;
-    } // public String allRecordsInFilmsTable(SQLiteDatabase sqdb)
-
-    public String searchInFilmsTable(SQLiteDatabase sqdb, String searchTitle) {
-        String result = "";
-        // Use LIKE operator and '%' wildcard to search for any occurrence of searchTitle in any column
+    public ArrayList<String> searchInFilmsTable(SQLiteDatabase sqdb, String searchTitle) {
+        ArrayList<String> resultList = new ArrayList<>();
         Cursor c = sqdb.rawQuery("SELECT * FROM FilmsTable WHERE movie_name LIKE '%" + searchTitle + "%' OR director LIKE '%" + searchTitle + "%' OR release_year LIKE '%" + searchTitle + "%' OR genre LIKE '%" + searchTitle + "%'", null);
 
         if (c != null) {
             if (c.moveToFirst()) {
                 do {
+                    String record = "";
                     String id = c.getString(0);
-                    result = result + id + ". ";
+                    record += id + ". ";
                     String movie_name = c.getString(1);
-                    result = result + movie_name + ", ";
+                    record += movie_name + ", ";
                     String director = c.getString(2);
-                    result = result + director + ", ";
+                    record += director + ", ";
                     String release_year = c.getString(3);
-                    result = result + release_year + ", ";
+                    record += release_year + ", ";
                     String genre = c.getString(4);
-                    result = result + genre + "\n"; // new line control character
+                    record += genre;
+                    resultList.add(record);
                     Log.w("FilmsTable", "ID = " + id + " movie_name = " + movie_name);
                 } while (c.moveToNext());
             } else {
-                result = "No Records Found for the Search title: " + searchTitle;
+                resultList.add("No Records Found for the Search title: " + searchTitle);
             }
             c.close();
         }
-
-        return result;
+        return resultList;
     }
 
     public void insertRecordFilmsTable(SQLiteDatabase sqdb,
