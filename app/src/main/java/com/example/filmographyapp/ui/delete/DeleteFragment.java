@@ -49,18 +49,33 @@ public class DeleteFragment extends Fragment {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Get selected items from the ListView
+                // Create a list to keep track of items to be deleted
+                List<String> itemsToDelete = new ArrayList<>();
+
+                // Get selected items from the ListView and add them to the itemsToDelete list
                 for (int i = 0; i < moviesListView.getCount(); i++) {
                     if (moviesListView.isItemChecked(i)) {
-                        // Implement the delete logic
-                        // For example: openDatabase.deleteMovie(database, moviesList.get(i));
+                        itemsToDelete.add(moviesList.get(i));
                     }
                 }
-                Toast.makeText(getContext(), "Selected movies deleted", Toast.LENGTH_SHORT).show();
-                // Update the list view after deletion
-                moviesList.clear();
-                moviesList.addAll(openDatabase.getAllMovies(database));
+
+                // Delete the selected items
+                for (String item : itemsToDelete) {
+                    openDatabase.deleteRecord(database, item);
+                    moviesList.remove(item);
+                }
+
+                // Notify the adapter of the data change
                 adapter.notifyDataSetChanged();
+
+                // Clear all selections
+                moviesListView.clearChoices();
+
+                // Set the ListView to CHOICE_MODE_NONE and then back to CHOICE_MODE_MULTIPLE to refresh the view
+                moviesListView.setChoiceMode(ListView.CHOICE_MODE_NONE);
+                moviesListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
+                Toast.makeText(getContext(), "Selected movies deleted", Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import java.io.File;
@@ -145,6 +146,16 @@ public class OpenDatabase extends SQLiteOpenHelper
 
         return moviesList;
     }
+
+    public void deleteRecord(SQLiteDatabase sqdb, String movieName) {
+        // Use prepared statements to prevent SQL injection
+        String sql = "DELETE FROM FilmsTable WHERE movie_name = ?";
+        SQLiteStatement statement = sqdb.compileStatement(sql);
+        statement.clearBindings();
+        statement.bindString(1, movieName);
+        statement.executeUpdateDelete();
+    }
+
 
     public static void copyDatabase(Context context) throws IOException, IOException {
         String DB_PATH = context.getDatabasePath("filmography.db").getPath();
