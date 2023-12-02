@@ -53,7 +53,7 @@ public class ListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String title = titleInput.getText().toString();
-                String result = openDatabase.searchBydirectorInFilmsTable(database, title);
+                String result = openDatabase.searchByTitleInFilmsTable(database, title);
                 resultTextView.setText(result);
             }
         });

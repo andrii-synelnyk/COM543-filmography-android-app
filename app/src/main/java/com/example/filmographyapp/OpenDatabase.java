@@ -72,16 +72,16 @@ public class OpenDatabase extends SQLiteOpenHelper
                 do
                 {
                     String id = c.getString(0);
-                    result = result + id + ",";
+                    result = result + id + ". ";
 
                     String movie_name = c.getString(1);
-                    result = result + movie_name + ",";
+                    result = result + movie_name + ", ";
 
                     String director = c.getString(2);
-                    result = result + director + ",";
+                    result = result + director + ", ";
 
                     String release_year = c.getString(3);
-                    result = result + release_year + ",";
+                    result = result + release_year + ", ";
 
                     String genre = c.getString(4);
                     result = result + genre + "\n"; // new line control character
@@ -95,10 +95,10 @@ public class OpenDatabase extends SQLiteOpenHelper
         return result;
     } // public String allRecordsInFilmsTable(SQLiteDatabase sqdb)
 
-    public String searchBydirectorInFilmsTable(SQLiteDatabase sqdb, String searchdirector)
+    public String searchByTitleInFilmsTable(SQLiteDatabase sqdb, String searchTitle)
     {
         String result = "";
-        Cursor c = sqdb.rawQuery("SELECT * FROM FilmsTable where director = '" + searchdirector + "'",
+        Cursor c = sqdb.rawQuery("SELECT * FROM FilmsTable where movie_name = '" + searchTitle + "'",
                 null);
         if (c != null)
         {
@@ -107,13 +107,13 @@ public class OpenDatabase extends SQLiteOpenHelper
                 do
                 {
                     String id = c.getString(0);
-                    result = result + id + ",";
+                    result = result + id + ". ";
                     String movie_name = c.getString(1);
-                    result = result + movie_name + ",";
+                    result = result + movie_name + ", ";
                     String director = c.getString(2);
-                    result = result + director + ",";
+                    result = result + director + ", ";
                     String release_year = c.getString(3);
-                    result = result + release_year + ",";
+                    result = result + release_year + ", ";
                     String genre = c.getString(4);
                     result = result + genre + "\n"; // new line control character
                     Log.w("FilmsTable", "ID = " + id + " movie_name = " + movie_name);
@@ -121,7 +121,7 @@ public class OpenDatabase extends SQLiteOpenHelper
             }
             else
             {
-                result = "No Records Found for the Search director = " + searchdirector;
+                result = "No Records Found for the Search title: " + searchTitle;
             }
         }
         c.close();
