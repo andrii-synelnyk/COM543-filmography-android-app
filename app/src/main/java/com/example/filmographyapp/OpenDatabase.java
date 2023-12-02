@@ -1,6 +1,7 @@
 package com.example.filmographyapp;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -135,6 +136,26 @@ public class OpenDatabase extends SQLiteOpenHelper
         statement.clearBindings();
         statement.bindString(1, movieName);
         statement.executeUpdateDelete();
+    }
+
+    @SuppressLint("Range")
+    public ArrayList<String> getMovieDetails(SQLiteDatabase sqdb, String movieName) {
+        ArrayList<String> movieDetails = new ArrayList<>();
+
+        // SQL query to select the movie record by name
+        String query = "SELECT * FROM FilmsTable WHERE movie_name = ?";
+        Cursor cursor = sqdb.rawQuery(query, new String[] { movieName });
+
+        if (cursor != null && cursor.moveToFirst()) {
+            // Assuming the columns are in the order: id, movie_name, director, release_year, genre
+            movieDetails.add(cursor.getString(cursor.getColumnIndex("id")));          // ID
+            movieDetails.add(cursor.getString(cursor.getColumnIndex("movie_name")));  // Movie Name
+            movieDetails.add(cursor.getString(cursor.getColumnIndex("director")));    // Director
+            movieDetails.add(cursor.getString(cursor.getColumnIndex("release_year")));// Release Year
+            movieDetails.add(cursor.getString(cursor.getColumnIndex("genre")));       // Genre
+            cursor.close();
+        }
+        return movieDetails;
     }
 
 

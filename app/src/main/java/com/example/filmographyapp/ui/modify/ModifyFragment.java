@@ -1,5 +1,6 @@
 package com.example.filmographyapp.ui.modify;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.filmographyapp.ModifyMovieActivity;
 import com.example.filmographyapp.OpenDatabase;
 import com.example.filmographyapp.databinding.FragmentModifyBinding;
 
@@ -28,7 +30,7 @@ public class ModifyFragment extends Fragment {
         // Initialize the database and get the data
         OpenDatabase openDatabase = new OpenDatabase(getContext());
         SQLiteDatabase database = openDatabase.getWritableDatabase();
-        ArrayList<String> movieList = openDatabase.getAllMovies(database); // Implement this method
+        ArrayList<String> movieList = openDatabase.allRecordsInFilmsTable(database); // Implement this method
 
         // Set up the ListView
         ListView listView = binding.modifyListView;
@@ -37,10 +39,18 @@ public class ModifyFragment extends Fragment {
 
         // Set an item click listener on the ListView
         listView.setOnItemClickListener((parent, view, position, id) -> {
-            // Handle the item click here. For example, open a new fragment or activity
-            // to modify the selected item.
+            // Handle the item click here
             String selectedMovie = movieList.get(position);
-            // Implement the logic to modify the selectedMovie
+            ArrayList<String> movieDetails = openDatabase.getMovieDetails(database, selectedMovie);
+
+            // Create an Intent to start ModifyMovieActivity
+            Intent intent = new Intent(getContext(), ModifyMovieActivity.class);
+
+            // Add movieDetails to the intent
+            intent.putStringArrayListExtra("movieDetails", movieDetails);
+
+            // Start the activity
+            startActivity(intent);
         });
 
         return root;
