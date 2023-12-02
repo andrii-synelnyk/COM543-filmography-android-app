@@ -3,6 +3,7 @@ package com.example.filmographyapp.ui.modify;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class ModifyFragment extends Fragment {
         OpenDatabase openDatabase = new OpenDatabase(getContext());
         SQLiteDatabase database = openDatabase.getWritableDatabase();
         ArrayList<String> movieList = openDatabase.allRecordsInFilmsTable(database); // Implement this method
+        ArrayList<String> onlyTitlesList = openDatabase.getAllMovies(database);
 
         // Set up the ListView
         ListView listView = binding.modifyListView;
@@ -40,7 +42,7 @@ public class ModifyFragment extends Fragment {
         // Set an item click listener on the ListView
         listView.setOnItemClickListener((parent, view, position, id) -> {
             // Handle the item click here
-            String selectedMovie = movieList.get(position);
+            String selectedMovie = onlyTitlesList.get(position);
             ArrayList<String> movieDetails = openDatabase.getMovieDetails(database, selectedMovie);
 
             // Create an Intent to start ModifyMovieActivity

@@ -6,4 +6,59 @@
     android:layout_height="match_parent"
     tools:context=".ModifyMovieActivity">
 
+    <EditText
+        android:id="@+id/movieTitleModifyInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"
+        android:textSize="25sp" />
+
+    <EditText
+        android:id="@+id/directorModifyInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@id/movieTitleModifyInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"
+        android:textSize="25sp"/>
+
+    <EditText
+        android:id="@+id/releaseYearModifyInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        app:layout_constraintTop_toBottomOf="@id/directorModifyInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"
+        android:textSize="25sp"/>
+
+    <EditText
+        android:id="@+id/genreModifyInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@id/releaseYearModifyInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"
+        android:textSize="25sp"/>
+
+    <Button
+        android:id="@+id/modifyRecordButton"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:text="Modify Record"
+        app:layout_constraintTop_toBottomOf="@id/genreModifyInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

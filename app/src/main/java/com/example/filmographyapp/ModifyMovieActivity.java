@@ -3,7 +3,9 @@ package com.example.filmographyapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
@@ -17,10 +19,24 @@ public class ModifyMovieActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
         // Get the movie details from the intent
         ArrayList<String> movieDetails = getIntent().getStringArrayListExtra("movieDetails");
 
-        // Use movieDetails as needed
+        // Retrieve each EditText view
+        EditText movieTitleModifyInput = findViewById(R.id.movieTitleModifyInput);
+        EditText directorModifyInput = findViewById(R.id.directorModifyInput);
+        EditText releaseYearModifyInput = findViewById(R.id.releaseYearModifyInput);
+        EditText genreModifyInput = findViewById(R.id.genreModifyInput);
+
+        // Check if movieDetails is not null and has enough data
+        if (movieDetails != null && movieDetails.size() >= 4) {
+            // Set the text of each EditText
+            movieTitleModifyInput.setText(movieDetails.get(1)); // movie name
+            directorModifyInput.setText(movieDetails.get(2));  // director
+            releaseYearModifyInput.setText(movieDetails.get(3)); // release year
+            genreModifyInput.setText(movieDetails.get(4));      // genre
+        }
     }
 
     @Override
