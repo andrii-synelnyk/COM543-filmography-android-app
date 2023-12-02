@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -40,19 +41,25 @@ public class AddFragment extends Fragment {
         addRecordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String movieTitle = movieTitleInput.getText().toString();
-                String director = directorInput.getText().toString();
-                String releaseYear = releaseYearInput.getText().toString();
-                String genre = genreInput.getText().toString();
+                String movieTitle = movieTitleInput.getText().toString().trim();
+                String director = directorInput.getText().toString().trim();
+                String releaseYear = releaseYearInput.getText().toString().trim();
+                String genre = genreInput.getText().toString().trim();
 
-                // Here, you would add the logic to insert a new record into the database
-                // For example: openDatabase.addRecordToFilmsTable(database, movieTitle, director, releaseYear, genre);
+                // Check if any field is empty
+                if (movieTitle.isEmpty() || director.isEmpty() || releaseYear.isEmpty() || genre.isEmpty()) {
+                    Toast.makeText(getContext(), "All fields must be filled", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Call insert method and show success message
+                    openDatabase.insertRecordFilmsTable(database, movieTitle, director, releaseYear, genre);
+                    Toast.makeText(getContext(), "Record inserted successfully", Toast.LENGTH_SHORT).show();
 
-                // Optionally, clear the EditText fields after adding the record
-                movieTitleInput.setText("");
-                directorInput.setText("");
-                releaseYearInput.setText("");
-                genreInput.setText("");
+                    // Clear the EditText fields after adding the record
+                    movieTitleInput.setText("");
+                    directorInput.setText("");
+                    releaseYearInput.setText("");
+                    genreInput.setText("");
+                }
             }
         });
 
