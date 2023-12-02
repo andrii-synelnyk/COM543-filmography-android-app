@@ -2,6 +2,7 @@ package com.example.filmographyapp;
 
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -111,7 +112,7 @@ public class OpenDatabase extends SQLiteOpenHelper
 
     }   //  public void insertRecordFilmsTable(SQLiteDatabase sqdb,String movie_name, String director, String release_year, String genre)
 
-    public ArrayList<String> getAllMovies(SQLiteDatabase sqdb) {
+    public ArrayList<String> getAllMovieNames(SQLiteDatabase sqdb) {
         ArrayList<String> moviesList = new ArrayList<>();
 
         Cursor c = sqdb.rawQuery("SELECT * FROM FilmsTable", null);
@@ -129,6 +130,24 @@ public class OpenDatabase extends SQLiteOpenHelper
         return moviesList;
     }
 
+    public ArrayList<String> getAllIds(SQLiteDatabase sqdb) {
+        ArrayList<String> idList = new ArrayList<>();
+
+        Cursor c = sqdb.rawQuery("SELECT * FROM FilmsTable", null);
+        if (c != null) {
+            if (c.moveToFirst()) {
+                do {
+                    String id = c.getString(0); // Assuming movie_name is at index 1
+                    idList.add(id);
+                    Log.w("FilmsTable", "Id = " + id);
+                } while (c.moveToNext());
+            }
+            c.close();
+        }
+
+        return idList;
+    }
+
     public void deleteRecord(SQLiteDatabase sqdb, String movieName) {
         // Use prepared statements to prevent SQL injection
         String sql = "DELETE FROM FilmsTable WHERE movie_name = ?";
@@ -139,12 +158,12 @@ public class OpenDatabase extends SQLiteOpenHelper
     }
 
     @SuppressLint("Range")
-    public ArrayList<String> getMovieDetails(SQLiteDatabase sqdb, String movieName) {
+    public ArrayList<String> getMovieDetailsById(SQLiteDatabase sqdb, String id) {
         ArrayList<String> movieDetails = new ArrayList<>();
 
         // SQL query to select the movie record by name
-        String query = "SELECT * FROM FilmsTable WHERE movie_name = ?";
-        Cursor cursor = sqdb.rawQuery(query, new String[] { movieName });
+        String query = "SELECT * FROM FilmsTable WHERE id = ?";
+        Cursor cursor = sqdb.rawQuery(query, new String[] { id });
 
         if (cursor != null && cursor.moveToFirst()) {
             // Assuming the columns are in the order: id, movie_name, director, release_year, genre
@@ -156,6 +175,16 @@ public class OpenDatabase extends SQLiteOpenHelper
             cursor.close();
         }
         return movieDetails;
+    }
+
+    public void updateMovieRecord(SQLiteDatabase sqdb, String id, String movieName, String director, String releaseYear, String genre) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("movie_name", movieName);
+        contentValues.put("director", director);
+        contentValues.put("release_year", releaseYear);
+        contentValues.put("genre", genre);
+
+        sqdb.update("FilmsTable", contentValues, "id = ?", new String[] { id });
     }
 
 

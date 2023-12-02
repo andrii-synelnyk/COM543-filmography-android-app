@@ -38,7 +38,7 @@ public class DeleteFragment extends Fragment {
         SQLiteDatabase database = openDatabase.getWritableDatabase();
 
         // Fetch movies from the database
-        List<String> moviesList = openDatabase.getAllMovies(database); // You'll need to implement this method
+        List<String> moviesList = openDatabase.getAllMovieNames(database); // You'll need to implement this method
 
         // Setting up the ArrayAdapter for the ListView
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_multiple_choice, moviesList);

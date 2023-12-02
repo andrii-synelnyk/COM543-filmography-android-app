@@ -11,7 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 
 import com.example.filmographyapp.ModifyMovieActivity;
 import com.example.filmographyapp.OpenDatabase;
@@ -22,37 +25,41 @@ import java.util.ArrayList;
 public class ModifyFragment extends Fragment {
 
     private FragmentModifyBinding binding;
+    private ArrayAdapter<String> adapter;
+    private OpenDatabase openDatabase;
+    private SQLiteDatabase database;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    private final ActivityResultLauncher<Intent> modifyMovieActivityResultLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == ModifyMovieActivity.RESULT_OK) {
+                    // Refresh the ListView
+                    ArrayList<String> updatedMovieList = openDatabase.allRecordsInFilmsTable(database);
+                    adapter.clear();
+                    adapter.addAll(updatedMovieList);
+                    adapter.notifyDataSetChanged();
+                }
+            });
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentModifyBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // Initialize the database and get the data
-        OpenDatabase openDatabase = new OpenDatabase(getContext());
-        SQLiteDatabase database = openDatabase.getWritableDatabase();
-        ArrayList<String> movieList = openDatabase.allRecordsInFilmsTable(database); // Implement this method
-        ArrayList<String> onlyTitlesList = openDatabase.getAllMovies(database);
+        openDatabase = new OpenDatabase(getContext());
+        database = openDatabase.getWritableDatabase();
+        ArrayList<String> movieList = openDatabase.allRecordsInFilmsTable(database);
+        ArrayList<String> onlyIdsList = openDatabase.getAllIds(database);
 
-        // Set up the ListView
         ListView listView = binding.modifyListView;
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, movieList);
+        adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, movieList);
         listView.setAdapter(adapter);
 
-        // Set an item click listener on the ListView
         listView.setOnItemClickListener((parent, view, position, id) -> {
-            // Handle the item click here
-            String selectedMovie = onlyTitlesList.get(position);
-            ArrayList<String> movieDetails = openDatabase.getMovieDetails(database, selectedMovie);
+            String selectedMovieId = onlyIdsList.get(position);
 
-            // Create an Intent to start ModifyMovieActivity
             Intent intent = new Intent(getContext(), ModifyMovieActivity.class);
-
-            // Add movieDetails to the intent
-            intent.putStringArrayListExtra("movieDetails", movieDetails);
-
-            // Start the activity
-            startActivity(intent);
+            intent.putExtra("selectedMovieId", selectedMovieId);
+            modifyMovieActivityResultLauncher.launch(intent);
         });
 
         return root;
