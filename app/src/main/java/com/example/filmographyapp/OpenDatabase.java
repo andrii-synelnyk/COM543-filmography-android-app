@@ -110,25 +110,6 @@ public class OpenDatabase extends SQLiteOpenHelper
 
     }   //  public void insertRecordFilmsTable(SQLiteDatabase sqdb,String movie_name, String director, String release_year, String genre)
 
-
-    public void updateRecord(SQLiteDatabase sqdb,
-                             String id, String Song, String director, String release_year, String genre)
-    {
-
-        //UPDATE Customers
-        //SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
-        //WHERE CustomerID = 1;
-
-        String updateString = "UPDATE FilmsTable SET movie_name = '" + Song + "', director = '" + director + "',";
-        updateString = updateString + " release_year = '" + release_year + "', genre = '" + genre + "'";
-        updateString = updateString + " WHERE id = " + id + ";";
-
-        Log.w("UPDATE","updateString = " + updateString);
-
-        sqdb.execSQL(updateString);
-
-    }   //  public void updateRecord(SQLiteDatabase sqdb, String id, String Song, String director, String release_year, String genre)
-
     public ArrayList<String> getAllMovies(SQLiteDatabase sqdb) {
         ArrayList<String> moviesList = new ArrayList<>();
 
