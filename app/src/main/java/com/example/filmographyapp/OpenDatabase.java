@@ -95,17 +95,14 @@ public class OpenDatabase extends SQLiteOpenHelper
         return result;
     } // public String allRecordsInFilmsTable(SQLiteDatabase sqdb)
 
-    public String searchByTitleInFilmsTable(SQLiteDatabase sqdb, String searchTitle)
-    {
+    public String searchByTitleInFilmsTable(SQLiteDatabase sqdb, String searchTitle) {
         String result = "";
-        Cursor c = sqdb.rawQuery("SELECT * FROM FilmsTable where movie_name = '" + searchTitle + "'",
-                null);
-        if (c != null)
-        {
-            if (c.moveToFirst())
-            {
-                do
-                {
+        // Use LIKE operator and '%' wildcard to search for any occurrence of searchTitle in any column
+        Cursor c = sqdb.rawQuery("SELECT * FROM FilmsTable WHERE movie_name LIKE '%" + searchTitle + "%' OR director LIKE '%" + searchTitle + "%' OR release_year LIKE '%" + searchTitle + "%' OR genre LIKE '%" + searchTitle + "%'", null);
+
+        if (c != null) {
+            if (c.moveToFirst()) {
+                do {
                     String id = c.getString(0);
                     result = result + id + ". ";
                     String movie_name = c.getString(1);
@@ -118,17 +115,14 @@ public class OpenDatabase extends SQLiteOpenHelper
                     result = result + genre + "\n"; // new line control character
                     Log.w("FilmsTable", "ID = " + id + " movie_name = " + movie_name);
                 } while (c.moveToNext());
-            }
-            else
-            {
+            } else {
                 result = "No Records Found for the Search title: " + searchTitle;
             }
+            c.close();
         }
-        c.close();
 
         return result;
-
-    } // public String searchBydirectorInFilmsTable(SQLiteDatabase sqdb, String searchdirector)
+    }
 
 
     public int numberOfRecordsInFilmsTable(SQLiteDatabase sqdb)
