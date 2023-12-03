@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.filmographyapp.OpenDatabase;
-import com.example.filmographyapp.R;
 import com.example.filmographyapp.databinding.FragmentDeleteBinding;
 
 import java.util.ArrayList;

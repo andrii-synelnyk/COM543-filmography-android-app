@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -49,7 +48,6 @@ public class ListFragment extends Fragment {
             OpenDatabase.copyDatabase(requireContext());
         } catch (Exception e) {
             e.printStackTrace();
-            // Handle error
         }
 
         // Database helper

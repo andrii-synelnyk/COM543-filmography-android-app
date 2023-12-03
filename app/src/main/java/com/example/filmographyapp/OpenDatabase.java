@@ -1,6 +1,5 @@
 package com.example.filmographyapp;
 
-
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
@@ -21,12 +20,11 @@ public class OpenDatabase extends SQLiteOpenHelper
 {
     public static final String DATABASE_NAME = "filmography.db";
 
-    // TOGGLE THIS NUMBER FOR UPDATING TABLES AND DATABASE
     private static final int DATABASE_VERSION = 1;
 
     public OpenDatabase(Context context)
     {
-        super( context, DATABASE_NAME, null, DATABASE_VERSION );
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
     } // OpenDatabase(Context context)
 
@@ -98,11 +96,7 @@ public class OpenDatabase extends SQLiteOpenHelper
     }
 
     public void insertRecordFilmsTable(SQLiteDatabase sqdb,
-                                      String movie_name, String director, String release_year, String genre)
-    {
-        // INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
-        //VALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway');
-
+                                      String movie_name, String director, String release_year, String genre) {
         String insertString = "INSERT INTO FilmsTable(movie_name, director, release_year, genre) ";
         insertString = insertString + " VALUES ('" + movie_name + "','" + director + "','" + release_year + "','" + genre + "');";
 
@@ -119,7 +113,7 @@ public class OpenDatabase extends SQLiteOpenHelper
         if (c != null) {
             if (c.moveToFirst()) {
                 do {
-                    String movie_name = c.getString(1); // Assuming movie_name is at index 1
+                    String movie_name = c.getString(1);
                     moviesList.add(movie_name);
                     Log.w("FilmsTable", "Movie Name = " + movie_name);
                 } while (c.moveToNext());
@@ -137,7 +131,7 @@ public class OpenDatabase extends SQLiteOpenHelper
         if (c != null) {
             if (c.moveToFirst()) {
                 do {
-                    String id = c.getString(0); // Assuming movie_name is at index 1
+                    String id = c.getString(0);
                     idList.add(id);
                     Log.w("FilmsTable", "Id = " + id);
                 } while (c.moveToNext());
@@ -166,12 +160,11 @@ public class OpenDatabase extends SQLiteOpenHelper
         Cursor cursor = sqdb.rawQuery(query, new String[] { id });
 
         if (cursor != null && cursor.moveToFirst()) {
-            // Assuming the columns are in the order: id, movie_name, director, release_year, genre
-            movieDetails.add(cursor.getString(cursor.getColumnIndex("id")));          // ID
-            movieDetails.add(cursor.getString(cursor.getColumnIndex("movie_name")));  // Movie Name
-            movieDetails.add(cursor.getString(cursor.getColumnIndex("director")));    // Director
-            movieDetails.add(cursor.getString(cursor.getColumnIndex("release_year")));// Release Year
-            movieDetails.add(cursor.getString(cursor.getColumnIndex("genre")));       // Genre
+            movieDetails.add(cursor.getString(cursor.getColumnIndex("id")));
+            movieDetails.add(cursor.getString(cursor.getColumnIndex("movie_name")));
+            movieDetails.add(cursor.getString(cursor.getColumnIndex("director")));
+            movieDetails.add(cursor.getString(cursor.getColumnIndex("release_year")));
+            movieDetails.add(cursor.getString(cursor.getColumnIndex("genre")));
             cursor.close();
         }
         return movieDetails;
@@ -187,8 +180,7 @@ public class OpenDatabase extends SQLiteOpenHelper
         sqdb.update("FilmsTable", contentValues, "id = ?", new String[] { id });
     }
 
-
-    public static void copyDatabase(Context context) throws IOException, IOException {
+    public static void copyDatabase(Context context) throws IOException {
         String DB_PATH = context.getDatabasePath("filmography.db").getPath();
         File dbFile = new File(DB_PATH);
 

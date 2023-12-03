@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,13 +22,13 @@ public class ModifyMovieActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        // Receive value passed from the class above
         String selectedMovieId = getIntent().getStringExtra("selectedMovieId");
 
         // Database helper
         OpenDatabase openDatabase = new OpenDatabase(this);
         SQLiteDatabase database = openDatabase.getWritableDatabase();
         ArrayList<String> movieDetails = openDatabase.getMovieDetailsById(database, selectedMovieId);
-
 
         // Retrieve each EditText view
         EditText movieTitleModifyInput = findViewById(R.id.movieTitleModifyInput);
@@ -42,15 +41,15 @@ public class ModifyMovieActivity extends AppCompatActivity {
         // Check if movieDetails is not null and has enough data
         if (movieDetails != null && movieDetails.size() >= 4) {
             // Set the text of each EditText
-            movieTitleModifyInput.setText(movieDetails.get(1)); // movie name
-            directorModifyInput.setText(movieDetails.get(2));  // director
-            releaseYearModifyInput.setText(movieDetails.get(3)); // release year
-            genreModifyInput.setText(movieDetails.get(4));      // genre
+            movieTitleModifyInput.setText(movieDetails.get(1));
+            directorModifyInput.setText(movieDetails.get(2));
+            releaseYearModifyInput.setText(movieDetails.get(3));
+            genreModifyInput.setText(movieDetails.get(4));
         }
 
         modifyRecordButton.setOnClickListener(v -> {
             // Collect updated values
-            String id = movieDetails.get(0); // Assuming the first element is the ID
+            String id = movieDetails.get(0);
             String updatedTitle = movieTitleModifyInput.getText().toString().trim();
             String updatedDirector = directorModifyInput.getText().toString().trim();
             String updatedReleaseYear = releaseYearModifyInput.getText().toString().trim();

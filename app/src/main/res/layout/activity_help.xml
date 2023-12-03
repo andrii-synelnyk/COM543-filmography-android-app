@@ -23,48 +23,42 @@
             android:layout_height="wrap_content"
             android:text="Adding a Record:\n\nTo add a new film record, navigate to the 'Add' section, fill in the details of the film including title, director, release year, and genre. Press 'Add Record' to save the film in the database."
             android:layout_marginBottom="16dp"
-            android:textSize="15sp"
-            />
+            android:textSize="15sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Searching by Film Title:\n\nTo search for a film, navigate to the 'Search' section, enter the film title in the search field, and press 'Search'. The app will display any matching records from the database."
             android:layout_marginBottom="16dp"
-            android:textSize="15sp"
-            />
+            android:textSize="15sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Listing All Records:\n\nTo view all stored film records, navigate to the 'List All' section. The app will display a list of all films stored in the database."
             android:layout_marginBottom="16dp"
-            android:textSize="15sp"
-            />
+            android:textSize="15sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Modifying a Record:\n\nTo modify an existing film record, navigate to the 'Modify' section, select the film you wish to edit, make the necessary changes in the provided fields, and press 'Modify Record'."
             android:layout_marginBottom="16dp"
-            android:textSize="15sp"
-            />
+            android:textSize="15sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Deleting a Record:\n\nTo delete a film record, navigate to the 'Delete' section, select the film(s) you wish to remove, and press 'Delete'. The selected records will be permanently removed from the database."
             android:layout_marginBottom="16dp"
-            android:textSize="15sp"
-            />
+            android:textSize="15sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Notes:\n\n- Ensure that all input fields are correctly filled before saving a record.\n- Use valid data formats for film titles, release years, etc.\n- The search functionality is case-insensitive and partial search terms can be used."
             android:layout_marginBottom="16dp"
-            android:textSize="15sp"
-            />
+            android:textSize="15sp" />
 
     </LinearLayout>
 
