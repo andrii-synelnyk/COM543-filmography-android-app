@@ -13,14 +13,23 @@
         android:theme="@style/Theme.FilmographyApp"
         tools:targetApi="31">
         <activity
+            android:name=".HelpActivity"
+            android:exported="false"
+            android:label="Help"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".AboutActivity"
+            android:exported="false"
+            android:label="About"
+            android:parentActivityName=".MainActivity"/>
+        <activity
             android:name=".ModifyMovieActivity"
             android:exported="false"
             android:label="Modify"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"
-            android:label="@string/app_name">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

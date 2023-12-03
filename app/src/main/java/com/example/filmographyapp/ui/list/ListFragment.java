@@ -1,5 +1,6 @@
 package com.example.filmographyapp.ui.list;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.filmographyapp.AboutActivity;
+import com.example.filmographyapp.HelpActivity;
 import com.example.filmographyapp.OpenDatabase;
 import com.example.filmographyapp.databinding.FragmentListBinding;
 
@@ -36,6 +39,8 @@ public class ListFragment extends Fragment {
         // Accessing the Buttons
         Button searchButton = binding.searchButton;
         Button listAllButton = binding.listAllButton;
+        Button aboutButton = binding.aboutButton;
+        Button helpButton = binding.helpButton;
 
         // Accessing the ListView
         ListView resultsListView = binding.resultsListView;
@@ -69,6 +74,24 @@ public class ListFragment extends Fragment {
                 ArrayList<String> results = openDatabase.allRecordsInFilmsTable(database);
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, results);
                 resultsListView.setAdapter(adapter);
+            }
+        });
+
+        // About Button OnClickListener
+        aboutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent aboutIntent = new Intent(getActivity(), AboutActivity.class);
+                startActivity(aboutIntent);
+            }
+        });
+
+        // Help Button OnClickListener
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent helpIntent = new Intent(getActivity(), HelpActivity.class);
+                startActivity(helpIntent);
             }
         });
 
